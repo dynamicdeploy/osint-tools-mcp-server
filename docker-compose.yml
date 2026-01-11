@@ -2,13 +2,27 @@ version: '3.8'
 
 services:
   osint-mcp:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     image: osint-tools-mcp-server:latest
     container_name: osint-tools-mcp
+    # Load API keys from .env file (create from .env.example)
+    env_file:
+      - .env  # Optional: Create .env file with your API keys
     environment:
       - PYTHONUNBUFFERED=1
+      # API keys can also be set directly here or via .env file
+      # Example:
+      # - SHODAN_API_KEY=${SHODAN_API_KEY}
+      # - VIRUSTOTAL_API_KEY=${VIRUSTOTAL_API_KEY}
     volumes:
       - ./reports:/app/reports
+      # Optional: Mount config files for tools that use them
+      # - ./spiderfoot.cfg:/opt/spiderfoot/spiderfoot.cfg:ro
+      # - ./ghunt.env:/opt/ghunt/.env:ro
     stdin_open: true
     tty: true
+    # MCP servers communicate via stdio, so we keep stdin/stdout open
+    # No ports needed as MCP uses stdio protocol
     restart: unless-stopped
