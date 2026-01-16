@@ -133,3 +133,4 @@ Since MCP uses stdio, logs go to stdout/stderr. You can capture them:
 docker run --rm -i osint-tools-mcp-server:latest 2>&1 | tee mcp.log
 ```
 
+

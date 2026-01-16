@@ -234,3 +234,4 @@ docker run --rm -i -e SHODAN_API_KEY="test123" \
 
 **No special configuration needed** - it's standard Unix/Python subprocess environment variable inheritance!
 
+

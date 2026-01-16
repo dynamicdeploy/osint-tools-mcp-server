@@ -191,3 +191,4 @@ response = send_mcp_request(
 - **MCP client timeout**: Controls how long the client waits for the tool to complete
 - **theHarvester**: Uses internal limits (`limit` parameter) instead of timeout
 
+
