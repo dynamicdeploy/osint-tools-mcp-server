@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  sherlock:
+    build:
+      context: ./sherlock
+      dockerfile: Dockerfile
+    image: sherlock-mcp-server:latest
+    container_name: sherlock-mcp-server
+    environment:
+      - PYTHONUNBUFFERED=1
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  holehe:
+    build:
+      context: ./holehe
+      dockerfile: Dockerfile
+    image: holehe-mcp-server:latest
+    container_name: holehe-mcp-server
+    environment:
+      - PYTHONUNBUFFERED=1
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  spiderfoot:
+    build:
+      context: ./spiderfoot
+      dockerfile: Dockerfile
+    image: spiderfoot-mcp-server:latest
+    container_name: spiderfoot-mcp-server
+    env_file:
+      - ../.env  # Optional: Create .env file with your API keys
+    environment:
+      - PYTHONUNBUFFERED=1
+      # API keys can also be set directly here or via .env file
+      # Example:
+      # - SHODAN_API_KEY=${SHODAN_API_KEY}
+      # - VIRUSTOTAL_API_KEY=${VIRUSTOTAL_API_KEY}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  ghunt:
+    build:
+      context: ./ghunt
+      dockerfile: Dockerfile
+    image: ghunt-mcp-server:latest
+    container_name: ghunt-mcp-server
+    env_file:
+      - ../.env  # Optional: Create .env file with your API keys
+    environment:
+      - PYTHONUNBUFFERED=1
+      # API keys can also be set directly here or via .env file
+      # Example:
+      # - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      # - GOOGLE_CX=${GOOGLE_CX}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  maigret:
+    build:
+      context: ./maigret
+      dockerfile: Dockerfile
+    image: maigret-mcp-server:latest
+    container_name: maigret-mcp-server
+    environment:
+      - PYTHONUNBUFFERED=1
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  theharvester:
+    build:
+      context: ..
+      dockerfile: services/theharvester/Dockerfile
+    image: theharvester-mcp-server:latest
+    container_name: theharvester-mcp-server
+    env_file:
+      - ../.env  # Optional: Create .env file with your API keys
+    environment:
+      - PYTHONUNBUFFERED=1
+      # API keys can also be set directly here or via .env file
+      # Example:
+      # - HUNTER_API_KEY=${HUNTER_API_KEY}
+      # - BING_API_KEY=${BING_API_KEY}
+      # - SHODAN_API_KEY=${SHODAN_API_KEY}
+      # - SECURITYTRAILS_API_KEY=${SECURITYTRAILS_API_KEY}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  blackbird:
+    build:
+      context: ./blackbird
+      dockerfile: Dockerfile
+    image: blackbird-mcp-server:latest
+    container_name: blackbird-mcp-server
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./blackbird/data:/app/data
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
