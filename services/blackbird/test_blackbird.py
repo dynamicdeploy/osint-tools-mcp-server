@@ -102,7 +102,7 @@ def main():
     print("Blackbird MCP Server Test Suite")
     print("="*60)
     
-    docker_cmd = ["docker", "run", "--rm", "-i", "blackbird-mcp-server:latest"]
+    docker_cmd = ["docker", "run", "--rm", "-i", "hackerdogs/blackbird-mcp-server:latest"]
     
     tests_passed = 0
     tests_total = 0

@@ -102,7 +102,7 @@ def main():
     print("Maigret MCP Server Test Suite")
     print("="*60)
     
-    docker_cmd = ["docker", "run", "--rm", "-i", "maigret-mcp-server:latest"]
+    docker_cmd = ["docker", "run", "--rm", "-i", "hackerdogs/maigret-mcp-server:latest"]
     
     tests_passed = 0
     tests_total = 0

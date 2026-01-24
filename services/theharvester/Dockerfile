@@ -18,7 +18,8 @@ RUN pip install --no-cache-dir ujson aiomultiprocess netaddr aiohttp && \
     pip install --no-cache-dir shodan || true && \
     pip install --no-cache-dir git+https://github.com/0xInfection/aiosqli.git || pip install --no-cache-dir aiosqli || echo "aiosqli optional"
 
-# Copy patch scripts (from root directory - build context is ..)
+# Copy patch scripts (files should be in service directory for publishing)
+# For docker-compose, these are copied from parent directory
 COPY fix_aiosqli.py /tmp/fix_aiosqli.py
 COPY patch_theharvester.py /tmp/patch_theharvester.py
 
@@ -27,7 +28,7 @@ RUN pip install --no-cache-dir theharvester && \
     git clone --depth 1 https://github.com/laramies/theHarvester.git /opt/theharvester && \
     cd /opt/theharvester && \
     pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir aiosqlite uvloop pyyaml aiohttp || true && \
+    pip install --no-cache-dir aiosqlite uvloop pyyaml aiohttp netaddr || true && \
     (pip install --no-cache-dir git+https://github.com/0xInfection/aiosqli.git 2>&1 || \
      pip install --no-cache-dir aiosqli 2>&1 || \
      (echo "Installing aiosqli from alternative source" && \
@@ -40,9 +41,9 @@ RUN pip install --no-cache-dir theharvester && \
     find . -name "*.pyc" -delete 2>/dev/null || true && \
     chmod +x theHarvester.py 2>/dev/null || true
 
-# Copy server files (from services/theharvester/ - build context is ..)
-COPY services/theharvester/src/theharvester_mcp_server.py /app/src/
-COPY services/theharvester/requirements.txt /app/
+# Copy server files (relative to service directory)
+COPY src/theharvester_mcp_server.py /app/src/
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Make the server executable

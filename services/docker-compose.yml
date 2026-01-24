@@ -75,8 +75,10 @@ services:
 
   theharvester:
     build:
-      context: ..
-      dockerfile: services/theharvester/Dockerfile
+      context: ./theharvester
+      dockerfile: Dockerfile
+    # Copy patch files from parent directory before build
+    # Note: Patch files need to be in theharvester directory for build to work
     image: theharvester-mcp-server:latest
     container_name: theharvester-mcp-server
     env_file:
